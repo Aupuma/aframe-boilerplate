@@ -4,13 +4,37 @@
     <meta charset="utf-8">
     <title>Hello, World! - A-Frame</title>
     <meta name="description" content="Hello, World! - A-Frame">
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
+    <script src="static/src/website-button-component.js"></script>
   </head>
   <body>
-    <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+      <a-assets>
+        <a-asset-item id="optimerBoldFont" src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-asset-item>
+
+        <a-asset-item id="Whatsapp3DIcon" src="static/meshes/WhatsappIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="LinkedIn3DIcon" src="static/meshes/LinkedinIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Twitter3DIcon" src="static/meshes/TwitterIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Gmail3DIcon" src="static/meshes/GmailIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+
+        <a-mixin id="SocialNetworksButton" scale="7.43008 7.43008 7.43008" rotation="90 0 0" 
+        animation="property: scale; to: 9 9 9; dir:alternate; dur: 750; easing: easeOutQuad; loop:true"></a-mixin>
+      </a-assets>
+      
+      <a-camera position="0 1.7 0" look-controls="enabled: true" cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-camera>
+
+      <a-entity id="WhatsappButton" website-button="url:https://wa.me/+34648836832" position="0.65549 0.46949 -1.90285" gltf-model="#Whatsapp3DIcon" mixin="SocialNetworksButton"></a-entity>
+      <a-entity id="LinkedInButton" website-button="url:https://www.linkedin.com/in/aurelio-puerta-martín-056723157" position="-0.70582 0.5183 -2.01684" gltf-model="#LinkedIn3DIcon" mixin="SocialNetworksButton" animation="delay:500"></a-entity>
+      <a-entity id="TwitterButton" website-button="url:https://www.twitter.com/aurepuerta_dev" position="1.96884 0.72253 -2.87083" gltf-model="#Twitter3DIcon" mixin="SocialNetworksButton" animation="delay:1000"></a-entity>
+      <a-entity id="GmailButton"  website-button="url:https://mailto:aurepuertadev@gmail.com" position="-1.9398 0.44692 -2.96457" gltf-model="#Gmail3DIcon" mixin="SocialNetworksButton" animation="delay:1250"></a-entity>
+
+      <a-cylinder id="ButtonBackground"></a-cylinder>
+      <a-entity text-geometry="value: What's up"></a-entity>
+
       <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
