@@ -1,9 +1,6 @@
 AFRAME.registerComponent('website-button', 
 {
-    schema: 
-    {
-        url: {type: 'string', default: 'www.google.com'}
-    },
+    schema: { type: 'string', default: 'www.google.com'},
 
     init: function () 
     {        
@@ -11,10 +8,10 @@ AFRAME.registerComponent('website-button',
 
         let openWebsite = () => 
         {
-            window.open(data.url);
+            window.open(data);
         }
 
         this.el.setAttribute('class','clickable');
         this.el.addEventListener('click', openWebsite);
-    },
+    }
 });
