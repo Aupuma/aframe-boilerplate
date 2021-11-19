@@ -12,7 +12,7 @@ AFRAME.registerComponent('scene-button',
 
         let animateButton = () =>
         {
-            this.el.emit('pushed');
+            this.el.emit('push');
             setTimeout(openSceneGroup,200)
         }
 

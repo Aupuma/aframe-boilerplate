@@ -27,15 +27,18 @@
         <a-asset-item id="Gmail3DIcon" src="static/meshes/GmailIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
 
-        <a-mixin id="SocialNetworksButton" scale="7.43008 7.43008 7.43008" rotation="90 0 0" 
-        animation="property: scale; to: 9 9 9; dir:alternate; dur: 750; easing: easeOutQuad; startEvents: play; loop:1"
-        repeat-animation-interval="startEvent:play; interval: 3000"
+        <a-mixin id="SceneButton" gltf-model="#Button3DBackground" rotation="0 90 0" scale="0.25 0.25 0.25" 
+        change-model-color= "#00FF00"
+        animation__pop="property: scale; to: 0.3 0.3 0.3; dir:alternate; dur: 750; easing: easeOutQuad; startEvents: pop; loop:1"
+        animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
+        repeat-animation-interval="animationName: pop; interval:3000"
         ></a-mixin>
 
-        <a-mixin id="SceneButton" gltf-model="#Button3DBackground" scale="1 1 1" 
-        change-model-color= "#00FF00"
-        animation="property: scale; to: 1.25 1.25 1.25; dir: alternate; dur: 125; easing: easeInQuad; loop:1; startEvents: pushed">
-        </a-mixin>
+        <a-mixin id="SocialNetworksButton" scale="7.43008 7.43008 7.43008" rotation="90 0 0" 
+        animation__pop="property: scale; to: 9 9 9; dir:alternate; dur: 750; easing: easeOutQuad; startEvents: pop; loop:1"
+        repeat-animation-interval="animationName: pop; interval:3000"
+        ></a-mixin>
+
       </a-assets>
       
       <a-camera position="0 1.7 0" look-controls="enabled: true" cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-camera>
@@ -43,12 +46,12 @@
       <a-entity id="MainButtonsGroup" position="0 0 -4.05" 
       animation__show="property: scale; to: 1 1 1; dur: 200; startEvents: show; autoplay:false" 
       animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hide; autoplay:false">
-        <a-box id="MainButtonBackground1" rotation="0 90 0" scale="1 1 1" position="1.54228 0.80823 -4.05799" material="color:red" scene-button="sceneGroupEl:#SSNNButtonsGroup" mixin="SceneButton"></a-box>
-        <a-box id="MainButtonBackground2" scale="1 0.55216 0.17689" position="0.0311 2.30658 -4.05799" material="color:green" scene-button="sceneGroupEl:#SSNNButtonsGroup"></a-box>
-        <a-box id="MainButtonBackground3" scale="1 0.55216 0.17689" position="-1.55205 0.80823 -4.05799" material="color:blue" scene-button="sceneGroupEl:#SSNNButtonsGroup"></a-box>
+        <a-box id="MainButtonBackground1" position="2.0221 0.46068 0.47603" scene-button="sceneGroupEl:#SSNNButtonsGroup" mixin="SceneButton"></a-box>
+        <a-box id="MainButtonBackground2" change-model-color="#4f4f4f" position="-0.03033 0.41099 1.90387"  scene-button="sceneGroupEl:#SSNNButtonsGroup"  mixin="SceneButton"></a-box>
+        <a-box id="MainButtonBackground3" position="-1.98744 0.39877 0.49474" scene-button="sceneGroupEl:#SSNNButtonsGroup"  mixin="SceneButton"></a-box>
       </a-entity>
       
-      <a-entity id="SSNNButtonsGroup" scale="1 1 1" animation="property: scale; to: 1 1 1; dur: 250; easing:easeOutQuad; startEvents: sceneChosen">
+      <a-entity id="SSNNButtonsGroup" scale="0 0 0" animation="property: scale; to: 1 1 1; dur: 250; easing:easeOutQuad; startEvents: sceneChosen">
         <a-entity id="WhatsappButton" website-button="https://wa.me/+34648836832" position="0.65549 0.46949 -1.90285" gltf-model="#Whatsapp3DIcon" mixin="SocialNetworksButton"  animation="delay:500"></a-entity>
         <a-entity id="LinkedInButton" website-button="https://www.linkedin.com/in/aurelio-puerta-martín-056723157" position="-0.70582 0.5183 -2.01684" gltf-model="#LinkedIn3DIcon" mixin="SocialNetworksButton"></a-entity>
         <a-entity id="TwitterButton" website-button="https://www.twitter.com/aurepuerta_dev" position="1.96884 0.72253 -2.87083" gltf-model="#Twitter3DIcon" mixin="SocialNetworksButton" animation="delay:1000"></a-entity>

@@ -5,14 +5,12 @@ AFRAME.registerComponent('change-model-color',
     init: function () 
     {        
         var data = this.data;
-        console.log('hoy')
 
         let changeColor = () => 
         {
             let mesh = this.el.getObject3D('mesh');
             if(!mesh) return;
 
-            console.log('hey')
             mesh.traverse(function(node)
             {
                 if(node.isMesh)
@@ -29,7 +27,6 @@ AFRAME.registerComponent('change-model-color',
         // After gltf model has loaded, switching textures is allowed
         this.el.addEventListener('model-loaded', function(ev){
             changeColor()
-            });   
-        
+        });  
     }
 });

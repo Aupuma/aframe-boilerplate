@@ -2,7 +2,7 @@ AFRAME.registerComponent('repeat-animation-interval',
 {
     schema: 
     {
-        startEvent: {type: 'string'},
+        animationName: {type: 'string'}, //The animation name must match the startEvents
         interval:{type:'number', default:1000}
     },
 
@@ -13,10 +13,21 @@ AFRAME.registerComponent('repeat-animation-interval',
         let playAnimation = () => 
         {
             setTimeout(()=>{
-                this.el.emit(data.startEvent)
+                this.el.emit(data.animationName) 
             }, data.interval)
         }
 
-        this.el.addEventListener('animationcomplete',playAnimation)
+        this.el.addEventListener("animationcomplete",function(e){
+            var animationDetail = e.detail.name
+            var detectedName = animationDetail.split('__')[1]
+
+            if(detectedName == data.animationName)
+            {
+                console.log("match")
+                playAnimation()
+            }
+        })
+
+        this.el.emit(data.animationName)
     }
 });
