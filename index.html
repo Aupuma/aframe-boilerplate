@@ -13,10 +13,14 @@
     <script src="static/src/scene-button-component.js"></script>
     <script src="static/src/repeat-animation-interval-component.js"></script>
     <script src="static/src/change-model-color.js"></script>
+    <script src="static/src/video-controller-component.js"></script>
   </head>
   <body>
     <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
       <a-assets>
+
+        <img id="playTexture" src="static/media/playTexture.png" crossorigin="anonymous">
+
         <a-asset-item id="Button3DBackground" src="static/meshes/Rounded Prisma.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <a-asset-item id="optimerBoldFont" src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-asset-item>
@@ -26,11 +30,15 @@
         <a-asset-item id="Twitter3DIcon" src="static/meshes/TwitterIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Gmail3DIcon" src="static/meshes/GmailIcon3D.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+        <a-mixin id="SceneGroup"       
+        animation__show="property: scale; to: 1 1 1; dur: 200; startEvents: show; autoplay:false; easing:easeOutQuad" 
+        animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hide; autoplay:false; easing:easeOutQuad">
+        </a-mixin>
 
         <a-mixin id="SceneButton" gltf-model="#Button3DBackground" rotation="0 90 0" scale="0.25 0.25 0.25" 
         change-model-color= "#00FF00"
-        animation__pop="property: scale; to: 0.3 0.3 0.3; dir:alternate; dur: 750; easing: easeOutQuad; startEvents: pop; loop:1"
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
+        animation__pop="property: scale; to: 0.3 0.3 0.3; dir:alternate; dur: 750; easing: easeOutQuad; startEvents: pop; loop:1"
         repeat-animation-interval="animationName: pop; interval:3000"
         ></a-mixin>
 
@@ -39,26 +47,28 @@
         repeat-animation-interval="animationName: pop; interval:3000"
         ></a-mixin>
 
+        <video id="reel" src="static/media/sample-mp4-file.mp4" loop="false" crossorigin="anonymous"></video>
       </a-assets>
       
       <a-camera position="0 1.7 0" look-controls="enabled: true" cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-camera>
 
-      <a-entity id="MainButtonsGroup" position="0 0 -4.05" 
-      animation__show="property: scale; to: 1 1 1; dur: 200; startEvents: show; autoplay:false" 
-      animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hide; autoplay:false">
+      <a-entity id="MainButtonsGroup" position="0 0 -4.05" mixin="SceneGroup">
         <a-box id="MainButtonBackground1" position="2.0221 0.46068 0.47603" scene-button="sceneGroupEl:#SSNNButtonsGroup" mixin="SceneButton"></a-box>
-        <a-box id="MainButtonBackground2" change-model-color="#4f4f4f" position="-0.03033 0.41099 1.90387"  scene-button="sceneGroupEl:#SSNNButtonsGroup"  mixin="SceneButton"></a-box>
+        <a-box id="MainButtonBackground2" change-model-color="#4f4f4f" position="-0.03033 0.41099 1.90387"  
+        scene-button="sceneGroupEl:#SSNNButtonsGroup"  mixin="SceneButton"></a-box>
+
         <a-box id="MainButtonBackground3" position="-1.98744 0.39877 0.49474" scene-button="sceneGroupEl:#SSNNButtonsGroup"  mixin="SceneButton"></a-box>
       </a-entity>
       
-      <a-entity id="SSNNButtonsGroup" scale="0 0 0" animation="property: scale; to: 1 1 1; dur: 250; easing:easeOutQuad; startEvents: sceneChosen">
+      <a-entity id="SSNNButtonsGroup" scale="0 0 0" mixin="SceneGroup">
         <a-entity id="WhatsappButton" website-button="https://wa.me/+34648836832" position="0.65549 0.46949 -1.90285" gltf-model="#Whatsapp3DIcon" mixin="SocialNetworksButton"  animation="delay:500"></a-entity>
         <a-entity id="LinkedInButton" website-button="https://www.linkedin.com/in/aurelio-puerta-martín-056723157" position="-0.70582 0.5183 -2.01684" gltf-model="#LinkedIn3DIcon" mixin="SocialNetworksButton"></a-entity>
         <a-entity id="TwitterButton" website-button="https://www.twitter.com/aurepuerta_dev" position="1.96884 0.72253 -2.87083" gltf-model="#Twitter3DIcon" mixin="SocialNetworksButton" animation="delay:1000"></a-entity>
         <a-entity id="GmailButton"  website-button="https://mailto:aurepuertadev@gmail.com" position="-1.9398 0.44692 -2.96457" gltf-model="#Gmail3DIcon" mixin="SocialNetworksButton" animation="delay:1250"></a-entity>  
       </a-entity>
 
-      <a-entity id="HobbyModelsGroup" position="0 0 -3.94442" animation="property:rotation; to: 0 360 0; dur: 5000; easing: linear; loop: true">
+      <a-entity id="HobbyModelsGroup" scale="0 0 0" position="0 0 -3.94442"
+       animation="property:rotation; to: 0 360 0; dur: 5000; easing: linear; loop: true">
         <a-cylinder id="HobbyModel1" scale="0.34007 0.34007 0.33944" position="0.96919 1.91491 0.0901"></a-cylinder>
         <a-cylinder id="HobbyModel2" scale="0.34007 0.34007 0.33944" position="-0.60055 1.91491 0.60805"></a-cylinder>
         <a-cylinder id="HobbyModel3" scale="0.34007 0.34007 0.33944" position="-0.28741 1.91491 -0.83571"></a-cylinder>
@@ -66,6 +76,10 @@
 
       <a-cylinder id="ButtonBackground"></a-cylinder>
       <a-entity text-geometry="value: What's up"></a-entity>
+
+      <a-video id="ReelVideo" src="#reel" width="1.6" height="0.9" scale="1.52595 1.52595 1.52595" position="0 1.74614 -3.57193"  video-controller>
+        <a-plane src="#playTexture" scale="0.5 0.5 0.5" position="0 0 0.03" shader="flat" material="alphaTest: 0.5"></a-plane>
+      </a-video>
 
       <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="#ECECEC"></a-sky>

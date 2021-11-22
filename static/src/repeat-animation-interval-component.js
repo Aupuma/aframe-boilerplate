@@ -23,7 +23,6 @@ AFRAME.registerComponent('repeat-animation-interval',
 
             if(detectedName == data.animationName)
             {
-                console.log("match")
                 playAnimation()
             }
         })

@@ -2,7 +2,8 @@ AFRAME.registerComponent('scene-button',
 {
     schema: 
     {
-        sceneGroupEl:{type: 'selector'}
+        sceneToShow:{type: 'selector'},
+        sceneToHide:{type: 'selector'}
     },
 
     init: function () 
@@ -13,13 +14,13 @@ AFRAME.registerComponent('scene-button',
         let animateButton = () =>
         {
             this.el.emit('push');
-            setTimeout(openSceneGroup,200)
+            setTimeout(changeScene,200)
         }
 
-        let openSceneGroup = () => 
+        let changeScene = () => 
         {
-            mainButtonsGroup.emit('hide')
-            data.sceneGroupEl.emit('sceneChosen')
+            data.sceneToHide.emit('hide')
+            data.sceneToShow.emit('show')
         }
 
         this.el.setAttribute('class','clickable');
