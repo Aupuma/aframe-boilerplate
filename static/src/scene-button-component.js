@@ -9,7 +9,6 @@ AFRAME.registerComponent('scene-button',
     init: function () 
     {        
         var data = this.data;
-        var mainButtonsGroup = document.querySelector('#MainButtonsGroup')
 
         let animateButton = () =>
         {

@@ -21,6 +21,7 @@ AFRAME.registerComponent('repeat-animation-interval',
             var animationDetail = e.detail.name
             var detectedName = animationDetail.split('__')[1]
 
+            console.log("animation end detected")
             if(detectedName == data.animationName)
             {
                 playAnimation()
