@@ -2,13 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Hello, World! - A-Frame</title>
-    <meta name="description" content="Hello, World! - A-Frame">
+    <title>Aurelio Puerta - Freelance Creative Technologist</title>
+    <meta name="description" content="Hi, this is me!">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 
     <!--AR Tracking-->
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.0/dist/mindar-image-aframe.prod.js"></script>
+    <script src="static/src/ARManager.js"></script>
 
     <!--External components-->
     <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
@@ -20,12 +22,27 @@
     <script src="static/src/website-button-component.js"></script>
     <script src="static/src/scene-button-component.js"></script>
     <script src="static/src/repeat-animation-interval-component.js"></script>
-    <script src="static/src/change-model-color.js"></script>
+    <script src="static/src/change-model-color-component.js"></script>
     <script src="static/src/video-controller-component.js"></script>
     <script src="static/src/play-character-animation-component.js"></script>
   </head>
   <body>
-    <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+    <!--Scanning overlay-->
+    <div id="scanning-overlay" class="hidden">
+      <div class="inner">
+	      <img src="./assets/card-example/card.png"/>
+	      <div class="scanline"></div>
+      </div>
+    </div>
+
+    <!--Scene-->
+    <a-scene  mindar-image="imageTargetSrc: static/targets.mind; uiScanning: #scanning-overlay" 
+    vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false"
+    inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+    loading-screen="backgroundColor:black"
+    >
+    <!-- <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"> -->
+
       <a-assets>
         <!--Images-->
         <img id="playTexture" src="static/media/playTexture.png" crossorigin="anonymous">
@@ -53,8 +70,8 @@
         animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hide; autoplay:false; easing:easeOutQuad">
         </a-mixin>
 
-        <a-mixin id="SceneButton" scale="0.25 0.25 0.25" rotation="-33 0 0"
-        change-model-color= "#960000" gltf-model="#Button3DBackground"  
+        <a-mixin id="SceneButton" scale="0.25 0.25 0.25" rotation="-20 0 0"
+        change-model-color= "#007cdb" gltf-model="#Button3DBackground"  
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
         animation__pop="property: scale; from: 0.25 0.25 0.25; to: 0.3 0.3 0.3; dir:alternate; dur: 750; easing: easeOutQuad; pauseEvents:push; resumeEvents:push; startEvents: pop; loop:1"
         repeat-animation-interval="animationName: pop; interval:3000"
@@ -70,131 +87,147 @@
         repeat-animation-interval="animationName: punch; interval:3000"
         ></a-mixin>
 
-        <a-mixin id="DescriptionText" text="font: exo2bold; height: 0; side: front; width: 2.830; align: center; wrapCount: 30.4; wrapPixels: 0; tabSize: 4"></a-mixin>
+        <a-mixin id="DescriptionText" text-geometry="height: 0; size: 0.12; font:#Exo2Font"></a-mixin>
 
+        <a-mixin id="ServiceEntity" scale="0.75 0.75 0.75"></a-mixin>
         <a-mixin id="ServiceModel" position="0 0.52756 0" scale="0.75 0.75 0.75"  animation="property:rotation; to: 0 360 0; dur: 12000; easing: linear; loop: true"></a-mixin> 
         <a-mixin id="ServiceText" scale="0.43881 0.43881 0.43881" rotation="-20 0 0" text-geometry="height: 0.25; size: 0.85; font:#Exo2Font" material="color:#cecece"></a-mixin>
       </a-assets>
       
-      <a-camera position="0 1.7 0" look-controls="enabled: true" cursor="rayOrigin: mouse;" raycaster="objects: .clickable"></a-camera>
-
-      <!-- Scenes -->
-      <a-entity id="MainButtonsGroup" scale="1 1 1" position="0 0 0" mixin="SceneGroup">
-
-        <a-box id="ServicesButton" position="2 2.59983 0.5" mixin="SceneButton"
-        scene-button="sceneToShow:#ServicesGroup; sceneToHide:#MainButtonsGroup" 
-        play-character-animation="clip: PayingAttention; loop: false">
-          <a-entity id="ServicesText"  position="-2.77724 -0.40455 0.99193" 
-            text-geometry="value: SERVICES; height: 0.25; size: 0.85; font:#Exo2Font"
-            material="color:#cecece">
-          </a-entity>
-        </a-box>
-
-        <a-box id="AboutMeButton" position="2 0.4 0.5"  mixin="SceneButton"
-        scene-button="sceneToShow: #AboutMeGroup; sceneToHide: #MainButtonsGroup"  
-        play-character-animation="clip: HipHop">
-          <a-entity id="AboutMeText"  position="-3.01893 -0.40455 0.99193" 
-          text-geometry="value: ABOUT ME; height: 0.25; size: 0.85; font:#Exo2Font"
-          material="color:#cecece">
-          </a-entity>
-        </a-box>
-
-        <a-box id="ContactButton" position="2 1.54975 0.476" mixin="SceneButton"
-        scene-button="sceneToShow: #SSNNButtonsGroup; sceneToHide: #MainButtonsGroup"
-        play-character-animation="clip: Talking">
-          <a-entity id="ContactText"  position="-2.55047 -0.40455 0.99193" 
-            text-geometry="value: CONTACT; height: 0.25; size: 0.8; font:#Exo2Font"
-            material="color:#cecece">
-          </a-entity>
-        </a-box>
-
-      </a-entity>
+      <!--Camera-->
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
       
-      <a-entity id="SSNNButtonsGroup" position="0 0 0" scale="0.0001 0.0001 0.0001" mixin="SceneGroup">
+      <!--Image target-->
+      <a-entity id="image-target" mindar-image-target="targetIndex: 0">
+        <!--Augmented content-->
+        <a-entity id="SceneWrapper" scale="0 0 0" rotation="90 0 0"
+        animation__show="property: scale; from: 0 0 0; to: 0.3 0.3 0.3; dur: 200; startEvents: showElements; autoplay:false; easing:easeOutQuad" 
+        animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hideElements; autoplay:false; easing:easeOutQuad"
+        >
 
-        <a-entity id="WhatsappButton" website-button="https://wa.me/+34648836832" animation__punch="delay:1000"
-        position="1.87114 0.55876 0" gltf-model="#Whatsapp3DIcon" mixin="SocialNetworksButton" ></a-entity>
+          <!--3D Avatar-->
+          <a-entity id="MiniYo" position="0.01 0 0" scale="0.012 0.012 0.012" gltf-model="#MiniYo3DModel"
+            animation-mixer="clip:Waving; crossFadeDuration: 0.5"
+          ></a-entity>
 
-        <a-entity id="LinkedInButton" website-button="https://www.linkedin.com/in/aurelio-puerta-martín-056723157" animation__punch="delay:500"
-        position="0.99064 2.2571 0" gltf-model="#LinkedIn3DIcon" mixin="SocialNetworksButton"></a-entity>
-        
-        <a-entity id="TwitterButton" website-button="https://www.twitter.com/aurepuerta_dev" animation__punch="delay:750"
-        position="2.29624 2.33013 0" gltf-model="#Twitter3DIcon" mixin="SocialNetworksButton" ></a-entity>
-        
-        <a-entity id="GmailButton"  website-button="https://mailto:aurepuertadev@gmail.com" 
-        position="0.09588 0.53775 0" gltf-model="#Gmail3DIcon" mixin="SocialNetworksButton" ></a-entity>  
-      
-        <a-entity id="InstagramIcon"  website-button="https://www.instagram.com/aupumaworkshop/" animation__punch="delay:250"
-        position="-0.39742 2.24123 0" gltf-model="#Instagram3DIcon" mixin="SocialNetworksButton" ></a-entity>  
-      
-        <a-box id="SSNNHomeButton" scale="0.65 0.65 0.65" position="0 0.3626 1.66713" mixin="HomeButton"
-        scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#SSNNButtonsGroup"></a-box>
-      </a-entity>
+          <!-- Scene groups -->
+          <a-entity id="MainButtonsGroup" scale="1 1 1" position="0 0 -0.65069" mixin="SceneGroup">
 
-      <a-entity id="AboutMeGroup" position="0 0 0" scale="0 0 0" mixin="SceneGroup">
+            <a-box id="ServicesButton" position="0 4.8 0.5" mixin="SceneButton"
+            scene-button="sceneToShow:#ServicesGroup; sceneToHide:#MainButtonsGroup" 
+            play-character-animation="clip: PayingAttention; loop: false">
+              <a-entity id="ServicesText"  position="-2.77724 -0.40455 0.99193" 
+                text-geometry="value: SERVICES; height: 0.25; size: 0.85; font:#Exo2Font"
+                material="color:#cecece">
+              </a-entity>
+            </a-box>
 
-       <a-entity id="HobbyModels" position="-1.30617 0.89233 0"
-       animation="property:rotation; to: 0 360 0; dur: 5000; easing: linear; loop: true">
-        <a-cylinder id="HobbyModel1" scale="0.34007 0.34007 0.33944" position="0.96919 1.91491 0.0901"></a-cylinder>
-        <a-cylinder id="HobbyModel2" scale="0.34007 0.34007 0.33944" position="-0.60055 1.91491 0.60805"></a-cylinder>
-        <a-cylinder id="HobbyModel3" scale="0.34007 0.34007 0.33944" position="-0.28741 1.91491 -0.83571"></a-cylinder>
-       </a-entity>
+            <a-box id="ContactButton" position="0 4 0.476" mixin="SceneButton"
+            scene-button="sceneToShow: #SSNNButtonsGroup; sceneToHide: #MainButtonsGroup"
+            play-character-animation="clip: Talking">
+              <a-entity id="ContactText"  position="-2.55047 -0.40455 0.99193" 
+                text-geometry="value: CONTACT; height: 0.25; size: 0.8; font:#Exo2Font"
+                material="color:#cecece">
+              </a-entity>
+            </a-box>
 
-      <a-entity id="DescriptionBackground" position="1.59594 1.16305 0" rotation="-33 0 0"
-      slice9="width: 2.45; height: 1.1; left: 20; right: 43; top: 20; bottom: 43; src: #roundedSquareBG; opacity: 0.65; color: #007cdb">
-        
-        <a-entity id="CreativeText"  position="-0.90391 0.87342 0" material="color:#FFFFFF"
-        text-geometry="value:I'm a Creative; height: 0.1; size: 0.2; font:#Exo2Font"></a-entity>
-        <a-entity id="TechnologistText"  position="-0.88895 0.62004 0" material="color:#FFFFFF"
-        text-geometry="value:Technologist; height: 0.1; size: 0.2; font:#Exo2Font"></a-entity>
+            <a-box id="AboutMeButton" position="0 3.2 0.5"  mixin="SceneButton"
+            scene-button="sceneToShow: #AboutMeGroup; sceneToHide: #MainButtonsGroup"  
+            play-character-animation="clip: HipHop">
+              <a-entity id="AboutMeText"  position="-3.01893 -0.40455 0.99193" 
+              text-geometry="value: ABOUT ME; height: 0.25; size: 0.85; font:#Exo2Font"
+              material="color:#cecece">
+              </a-entity>
+            </a-box>
 
-        <a-entity id="XRText" position="0.00127 0.34068 0" mixin="DescriptionText" text="value:+3 years of experience in XR"></a-entity>
-        <a-entity id="PassionText" position="0 0.03579 0" mixin="DescriptionText" text="value:Passion in 3D and design"></a-entity>
-        <a-entity id="IncorporateText" position="0.00127 -0.27182 0" mixin="DescriptionText" text="value:Striving for Innovation"></a-entity>
+          </a-entity>
 
-      </a-entity>
-             
-       <a-box id="ContactMeHomeButton" scale="0.65 0.65 0.65" position="0 0.3626 1.66713" mixin="HomeButton"
-       scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#AboutMeGroup"></a-box>
-      </a-entity>
+          <a-entity id="ServicesGroup" position="0 0 0" scale="0.0001 0.0001 0.0001" mixin="SceneGroup">
 
-      <a-entity id="ServicesGroup" position="0 0 0" scale="0.0001 0.0001 0.0001" mixin="SceneGroup">
+            <a-entity id="VRService" position="-1.25 2 -0.5" mixin="ServiceEntity">
+              <a-box id="VRServiceModel"  mixin="ServiceModel"></a-box>
+              <a-entity id="VRServiceText" scale="0.43881 0.43881 0.43881" mixin="ServiceText"  position="-0.32426 0.00219 0.79166" text-geometry="value: VR"></a-entity>
+            </a-entity>
 
-        <a-entity id="VRService" position="0.80056 -0.00374 0">
-          <a-box id="VRServiceModel" mixin="ServiceModel"></a-box>
-          <a-entity id="VRServiceText" scale="0.43881 0.43881 0.43881" mixin="ServiceText"  position="-0.32426 0.00219 0.79166" text-geometry="value: VR"></a-entity>
+            <a-entity id="ARService" position="-1.25 0.5 0.5" mixin="ServiceEntity">
+              <a-box id="ARServiceModel" mixin="ServiceModel"></a-box>
+              <a-entity id="ARServiceText" mixin="ServiceText"  position="-0.38375 0.00219 0.79166" text-geometry="value: AR"></a-entity>
+            </a-entity>
+
+            <a-entity id="3DScanService" position="1.25 0.5 0.5" mixin="ServiceEntity">
+              <a-box id="3DScanModel"  mixin="ServiceModel"></a-box>
+              <a-entity id="3DScanText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D SCAN"></a-entity>
+            </a-entity>
+
+            <a-entity id="3DPrintService" position="1.25 2 -0.5" mixin="ServiceEntity">
+              <a-box id="3DPrintModel"   mixin="ServiceModel"></a-box>
+              <a-entity id="3DPrintText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D PRINT"></a-entity>
+            </a-entity>
+
+            <a-box id="ServicesHomeButton" scale="0.65 0.65 0.65" position="0 0.3626 2" mixin="HomeButton"
+            scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#ServicesGroup"></a-box>
+            
+            <a-video id="ReelVideo" rotation="0 0 0" src="#reel" video-controller look-at="[camera]"
+            width="1.6" height="0.9" scale="2 2 2" position="0 4.5 -0.1982">
+              <a-plane src="#playTexture" scale="0.5 0.5 0.5" position="0 0 0.03" shader="flat" material="alphaTest: 0.5"></a-plane>
+            </a-video>
+          </a-entity>
+          
+          <a-entity id="SSNNButtonsGroup" position="0 0 0" scale="0.0001 0.0001 0.0001" mixin="SceneGroup">
+
+            <a-entity id="WhatsappButton" website-button="https://wa.me/+34648836832" animation__punch="delay:1000"
+            position="0 3.70848 0" gltf-model="#Whatsapp3DIcon" mixin="SocialNetworksButton" ></a-entity>
+
+            <a-entity id="LinkedInButton" website-button="https://www.linkedin.com/in/aurelio-puerta-martín-056723157" animation__punch="delay:500"
+            position="-1 4.78392 0" gltf-model="#LinkedIn3DIcon" mixin="SocialNetworksButton"></a-entity>
+            
+            <a-entity id="TwitterButton" website-button="https://www.twitter.com/aurepuerta_dev" animation__punch="delay:750"
+            position="1 2.53271 0" gltf-model="#Twitter3DIcon" mixin="SocialNetworksButton" ></a-entity>
+            
+            <a-entity id="GmailButton"  website-button="https://mailto:aurepuertadev@gmail.com" 
+            position="1 4.79871 0" gltf-model="#Gmail3DIcon" mixin="SocialNetworksButton" ></a-entity>  
+          
+            <a-entity id="InstagramIcon"  website-button="https://www.instagram.com/aupumaworkshop/" animation__punch="delay:250"
+            position="-1 2.47736 0" gltf-model="#Instagram3DIcon" mixin="SocialNetworksButton" ></a-entity>  
+          
+            <a-box id="SSNNHomeButton" scale="0.65 0.65 0.65" position="0 0.3626 1.66713" mixin="HomeButton"
+            scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#SSNNButtonsGroup"></a-box>
+          </a-entity>
+
+          <a-entity id="AboutMeGroup" position="0 0 0" scale="0 0 0" mixin="SceneGroup">
+
+          <a-entity id="HobbyModels" position="0 0.8924 0"
+          animation="property:rotation; to: 0 360 0; dur: 5000; easing: linear; loop: true">
+            <a-cylinder id="HobbyModel1" scale="0.34007 0.34007 0.33944" position="0.96919 1.91491 0.0901"></a-cylinder>
+            <a-cylinder id="HobbyModel2" scale="0.34007 0.34007 0.33944" position="-0.60055 1.91491 0.60805"></a-cylinder>
+            <a-cylinder id="HobbyModel3" scale="0.34007 0.34007 0.33944" position="-0.28741 1.91491 -0.83571"></a-cylinder>
+          </a-entity>
+
+          <a-entity id="DescriptionBackground" position="0 4 0" rotation="-20 0 0" scale="0.9 0.9 0.9"
+          slice9="width: 2.45; height: 1.1; left: 20; right: 43; top: 20; bottom: 43; src: #roundedSquareBG; opacity: 0.75; color: #007cdb">
+            
+            <a-entity id="CreativeText"  position="-0.90391 0.87342 0" material="color:#FFFFFF"
+            text-geometry="value:I'm a Creative; height: 0.1; size: 0.2; font:#Exo2Font"></a-entity>
+            <a-entity id="TechnologistText"  position="-0.88895 0.62004 0" material="color:#FFFFFF"
+            text-geometry="value:Technologist; height: 0.1; size: 0.2; font:#Exo2Font"></a-entity>
+
+            <a-entity id="XRText" position="-1.13 0.29 0.1" mixin="DescriptionText" text-geometry="value:+3 years of experience in XR"></a-entity>
+            <a-entity id="PassionText" position="-1 -0.01 0.1" mixin="DescriptionText" text-geometry="value:Passion in 3D and design"></a-entity>
+            <a-entity id="IncorporateText" position="-0.95 -0.31 0.1" mixin="DescriptionText" text-geometry="value:Striving for Innovation"></a-entity>
+
+          </a-entity>
+                
+          <a-box id="ContactMeHomeButton" scale="0.65 0.65 0.65" position="0 0.3626 1.66713" mixin="HomeButton"
+          scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#AboutMeGroup"></a-box>
+          </a-entity>
+
         </a-entity>
 
-        <a-entity id="ARService" position="-0.17662 1.46 0">
-          <a-box id="ARServiceModel" mixin="ServiceModel"></a-box>
-          <a-entity id="ARServiceText" mixin="ServiceText"  position="-0.38375 0.00219 0.79166" text-geometry="value: AR"></a-entity>
-        </a-entity>
-
-        <a-entity id="3DScanService" position="2.57932 1.46 0">
-          <a-box id="3DScanModel" mixin="ServiceModel"></a-box>
-          <a-entity id="3DScanText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D SCAN"></a-entity>
-        </a-entity>
-
-        <a-entity id="3DPrintService" position="3.51916 0 0">
-          <a-box id="3DPrintModel" position="0 0.52756 0" mixin="ServiceModel"></a-box>
-          <a-entity id="3DPrintText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D PRINT"></a-entity>
-        </a-entity>
-
-        <a-box id="ServicesHomeButton" scale="0.65 0.65 0.65" position="0 0.3626 2" mixin="HomeButton"
-        scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#ServicesGroup"></a-box>
-        
-        <a-video id="ReelVideo" rotation="0 0 0" src="#reel" video-controller look-at="[camera]"
-        width="1.6" height="0.9" scale="2 2 2" position="1.62486 3.57426 0.35019">
-          <a-plane src="#playTexture" scale="0.5 0.5 0.5" position="0 0 0.03" shader="flat" material="alphaTest: 0.5"></a-plane>
-        </a-video>
+        <!--Test plane-->
+        <a-plane color="blue" opacity="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
 
-      <a-entity id="MiniYo" position="-1.36915 0 0" scale="0.012 0.012 0.012" gltf-model="#MiniYo3DModel"
-        animation-mixer="clip:Waving; crossFadeDuration: 0.5"
-      ></a-entity>
-
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
     </a-scene>
+
   </body>
 </html>

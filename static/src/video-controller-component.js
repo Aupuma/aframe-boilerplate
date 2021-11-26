@@ -10,6 +10,7 @@ AFRAME.registerComponent('video-controller',
         let el = this.el;
         let videoSource = this.el.getAttribute('material').src;
         let playImg = el.object3D.children[0];
+        var groupHomeButton = document.querySelector('#ServicesHomeButton')
 
         let togglePlayback = () => 
         {
@@ -24,6 +25,14 @@ AFRAME.registerComponent('video-controller',
                playImg.visible = true;
             }
         }
+
+        let resetVideo = () =>
+        {
+            videoSource.pause();
+            videoSource.currentTime = 0;
+            videoSource.load();
+            playImg.visible = true;
+        }
   
         el.setAttribute("class","clickable");
       
@@ -37,5 +46,7 @@ AFRAME.registerComponent('video-controller',
         { 
             playImg.visible = false;
         });
+
+        groupHomeButton.addEventListener('click', resetVideo);
     }
 });
