@@ -18,8 +18,16 @@ AFRAME.registerComponent('scene-button',
 
         let changeScene = () => 
         {
-            data.sceneToHide.emit('hide')
-            data.sceneToShow.emit('show')
+            data.sceneToShow.setAttribute('visible',true);
+            data.sceneToShow.emit('show');
+
+            data.sceneToHide.emit('hide');
+            setTimeout(makeOldInvisible,225);
+        }
+
+        let makeOldInvisible = () =>
+        {
+            data.sceneToHide.setAttribute('visible',false);
         }
 
         this.el.setAttribute('class','clickable');
