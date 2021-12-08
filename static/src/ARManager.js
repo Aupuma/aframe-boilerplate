@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function()
         console.log(isFirstTime)
         if(isFirstTime)
         {
-            setTimeout(ShowElements,200)
+            setTimeout(ShowElements,300)
             isFirstTime = false;
         }
         else
