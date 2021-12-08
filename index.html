@@ -30,18 +30,18 @@
     <!--Scanning overlay-->
     <div id="scanning-overlay" class="hidden">
       <div class="inner">
-	      <img src="static/media/card-06cb9111a8e32627db6bfafc7aa22a4d.png"/>
+	      <img src="static/media/HexagonalTrackerName.png"/>
 	      <div class="scanline"></div>
       </div>
     </div>
 
-    <!--Scene
-    <a-scene  mindar-image="imageTargetSrc: static/targets.mind; uiScanning: #scanning-overlay" 
+
+    <a-scene  mindar-image="imageTargetSrc: static/hexagonalTracker.mind; uiScanning: #scanning-overlay" 
     vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false"
     inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
     loading-screen="backgroundColor:black"
-    >-->
-    <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+    >
+    <!-- <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"> -->
 
       <a-assets>
         <!--Images-->
@@ -90,7 +90,7 @@
         repeat-animation-interval="animationName: pop; interval:3000"
         ></a-mixin>
 
-        <a-mixin id="HomeButton" scale="0.15 0.2 0.2" rotation="-20 0 0"
+        <a-mixin id="HomeButton" position="0 0.36 1" scale="0.15 0.2 0.2" rotation="-20 0 0"
         change-model-color= "#7765F3" gltf-model="#Button3DBackground"  
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
         play-character-animation="clip:Waving"
@@ -114,13 +114,13 @@
       </a-assets>
       
       <!--Camera-->
-      <a-camera position="0 2 4.96996" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
       
-      <!--Image target
-      <a-entity id="image-target" mindar-image-target="targetIndex: 0">-->
+      <!-- Image target -->
+      <a-entity id="image-target" mindar-image-target="targetIndex: 0">
         <!--Augmented content-->
-        <a-entity id="SceneWrapper" scale="1 1 1" rotation="0 0 0"
-        animation__show="property: scale; from: 0 0 0; to: 0.3 0.3 0.3; dur: 200; startEvents: showElements; autoplay:false; easing:easeOutQuad" 
+        <a-entity id="SceneWrapper" scale="0 0 0" rotation="90 0 0"
+        animation__show="property: scale; from: 0 0 0; to: 0.4 0.4 0.4; dur: 200; startEvents: showElements; autoplay:false; easing:easeOutQuad" 
         animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hideElements; autoplay:false; easing:easeOutQuad"
         >
 
@@ -188,7 +188,7 @@
               <a-plane src="#playTexture" scale="0.5 0.5 0.5" position="0 0 0.03" shader="flat" material="alphaTest: 0.5"></a-plane>
             </a-video>
 
-            <a-box id="ServicesHomeButton" position="0 0.3626 2" mixin="HomeButton"
+            <a-box id="ServicesHomeButton" mixin="HomeButton"
             scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#ServicesGroup">
               <a-entity mixin="HomeText"></a-entity>
             </a-box>
@@ -211,7 +211,7 @@
             <a-entity id="InstagramIcon"  website-button="https://www.instagram.com/aupumaworkshop/" animation__punch="delay:250"
             position="-1 2.47736 0" gltf-model="#Instagram3DIcon" mixin="SocialNetworksButton" ></a-entity>  
           
-            <a-box id="SSNNHomeButton" position="0 0.3626 1.66713" mixin="HomeButton"
+            <a-box id="SSNNHomeButton" mixin="HomeButton"
             scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#SSNNButtonsGroup">
               <a-entity mixin="HomeText"></a-entity>
             </a-box>
@@ -240,7 +240,7 @@
 
           </a-entity>
                 
-          <a-box id="ContactMeHomeButton" position="0 0.3626 1.66713" mixin="HomeButton"
+          <a-box id="ContactMeHomeButton" mixin="HomeButton"
           scene-button="sceneToShow:#MainButtonsGroup; sceneToHide:#AboutMeGroup">
             <a-entity mixin="HomeText"></a-entity>
           </a-box>
@@ -249,8 +249,8 @@
         </a-entity>
 
         <!--Test plane-->
-        <a-plane color="blue" opacity="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-      <!--</a-entity> -->
+        <!-- <a-plane color="blue" opacity="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> -->
+      </a-entity>
 
     </a-scene>
 
