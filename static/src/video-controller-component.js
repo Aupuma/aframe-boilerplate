@@ -44,7 +44,7 @@ AFRAME.registerComponent('video-controller',
   
         videoSource.addEventListener('ended', function (evt) 
         { 
-            playImg.visible = false;
+            playImg.visible = true;
         });
 
         groupHomeButton.addEventListener('click', resetVideo);
