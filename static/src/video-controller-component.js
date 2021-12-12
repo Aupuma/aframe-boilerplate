@@ -32,6 +32,7 @@ AFRAME.registerComponent('video-controller',
             videoSource.currentTime = 0;
             videoSource.load();
             playImg.visible = true;
+            el.emit('resetPlayback')
         }
   
         el.setAttribute("class","clickable");
@@ -44,7 +45,7 @@ AFRAME.registerComponent('video-controller',
   
         videoSource.addEventListener('ended', function (evt) 
         { 
-            playImg.visible = true;
+            resetVideo()
         });
 
         groupHomeButton.addEventListener('click', resetVideo);

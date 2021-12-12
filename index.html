@@ -25,6 +25,7 @@
     <script src="static/src/change-model-color-component.js"></script>
     <script src="static/src/video-controller-component.js"></script>
     <script src="static/src/play-character-animation-component.js"></script>
+    <script src="static/src/show-on-video-time-component.js"></script>
   </head>
   <body>
     <!--Scanning overlay-->
@@ -108,7 +109,11 @@
 
         <a-mixin id="DescriptionText" text-geometry="height: 0; size: 0.12; font:#Exo2Font"></a-mixin>
 
-        <a-mixin id="ServiceEntity" scale="0.75 0.75 0.75"></a-mixin>
+        <a-mixin id="ServiceEntity" position="1.75 0.5 0" scale="0 0 0" visible="false"
+        show-on-video-time="video:#reel; videoController:#ReelVideo; showAnimEvent: showSv; hideAnimEvent: hideSv"
+        animation__show="property: scale; to: 1 1 1; dur: 125; easing: easeOutQuad; startEvents: showSv"
+        animation__hide="property: scale; to: 0 0 0; dur: 125; easing: easeOutQuad; startEvents: hideSv">
+      </a-mixin>
         <a-mixin id="ServiceModel" position="0 0.52756 0" scale="0.05 0.05 0.05"  animation="property:rotation; to: 0 360 0; dur: 16000; easing: linear; loop: true" animation-mixer></a-mixin> 
         <a-mixin id="ServiceText" scale="0.43881 0.43881 0.43881" rotation="-20 0 0" text-geometry="height: 0.25; size: 0.85; font:#Exo2Font" material="color:#cecece"></a-mixin>
       </a-assets>
@@ -163,22 +168,26 @@
 
           <a-entity id="ServicesGroup"  scale="0.0001 0.0001 0.0001" mixin="SceneGroup" visible="false">
 
-            <a-entity id="ARService" position="-1.25 2 -0.5" mixin="ServiceEntity">
+            <a-entity id="ARService" mixin="ServiceEntity"
+            show-on-video-time="showTime:5.0; hideTime: 10.0">
               <a-entity id="ARModel" mixin="ServiceModel" gltf-model="#ARServiceModel"></a-entity>
               <a-entity id="ARServiceText" mixin="ServiceText"  position="-0.38375 0.00219 0.79166" text-geometry="value: AR"></a-entity>
             </a-entity>
 
-            <a-entity id="VRService" position="1.25 2 -0.5" mixin="ServiceEntity">
+            <a-entity id="VRService"mixin="ServiceEntity"
+            show-on-video-time="showTime:11.0; hideTime: 15.0">
               <a-entity id="VRModel"  mixin="ServiceModel" gltf-model="#VRServiceModel"></a-entity>
               <a-entity id="VRServiceText" mixin="ServiceText"  position="-0.32426 0.00219 0.79166" text-geometry="value: VR"></a-entity>
             </a-entity>
 
-            <a-entity id="3DScanService" position="1.75 0.5 0.5" mixin="ServiceEntity">
+            <a-entity id="3DScanService" mixin="ServiceEntity"
+            show-on-video-time="showTime:16.0; hideTime: 20.0">
               <a-entity id="3DScanModel"  mixin="ServiceModel" gltf-model="#3DScanServiceModel"></a-entity>
               <a-entity id="3DScanText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D SCAN"></a-entity>
             </a-entity>
 
-            <a-entity id="3DPrintService" position="-1.6 0.5 0.5" mixin="ServiceEntity">
+            <a-entity id="3DPrintService" mixin="ServiceEntity"
+            show-on-video-time="showTime:21.0; hideTime: 25.0">
               <a-entity id="3DPrintModel"   mixin="ServiceModel" gltf-model="#3DPrintServiceModel"></a-entity>
               <a-entity id="3DPrintText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D PRINT"></a-entity>
             </a-entity>
