@@ -92,7 +92,7 @@
         ></a-mixin>
 
         <a-mixin id="HomeButton" position="0 0.36 1" scale="0.15 0.2 0.2" rotation="-20 0 0"
-        change-model-color= "#FFB905" gltf-model="#Button3DBackground"  
+        change-model-color= "#2a10aa" gltf-model="#Button3DBackground"  
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
         play-character-animation="clip:Waving"
         ></a-mixin>
@@ -118,6 +118,11 @@
         <a-mixin id="ServiceText" scale="0.43881 0.43881 0.43881" rotation="-20 0 0" text-geometry="height: 0.25; size: 0.85; font:#Exo2Font" material="color:#cecece"></a-mixin>
       </a-assets>
       
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.6; target:#directionaltarget" position="-0.5 -1 0">
+        <a-entity id="directionaltarget" position="2.75 2 -4.5"></a-entity>
+      </a-entity>
+
       <!--Camera-->
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 20000; objects: .clickable"></a-camera>
       
@@ -128,7 +133,6 @@
         animation__show="property: scale; from: 0 0 0; to: 0.4 0.4 0.4; dur: 200; startEvents: showElements; autoplay:false; easing:easeOutQuad" 
         animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hideElements; autoplay:false; easing:easeOutQuad"
         >
-
           <!--3D Avatar-->
           <a-entity id="MiniYo" position="0.01 0 0" scale="0.012 0.012 0.012" gltf-model="#MiniYo3DModel"
             animation-mixer="clip:Waving; crossFadeDuration: 0.5"
@@ -155,7 +159,7 @@
               </a-entity>
             </a-box>
 
-            <a-box id="AboutMeButton" position="0 3.2 0.5"  mixin="SceneButton" change-model-color="#3cc2c2"
+            <a-box id="AboutMeButton" position="0 3.2 0.5"  mixin="SceneButton" change-model-color="#31a0a0"
             scene-button="sceneToShow: #AboutMeGroup; sceneToHide: #MainButtonsGroup"  
             play-character-animation="clip: HipHop">
               <a-entity id="AboutMeText"  position="-3.01893 -0.40455 0.99193" 
