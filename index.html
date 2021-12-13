@@ -92,7 +92,7 @@
         ></a-mixin>
 
         <a-mixin id="HomeButton" position="0 0.36 1" scale="0.15 0.2 0.2" rotation="-20 0 0"
-        change-model-color= "#7765F3" gltf-model="#Button3DBackground"  
+        change-model-color= "#FFB905" gltf-model="#Button3DBackground"  
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
         play-character-animation="clip:Waving"
         ></a-mixin>
@@ -137,7 +137,7 @@
           <!-- Scene groups -->
           <a-entity id="MainButtonsGroup" scale="1 1 1" position="0 0 -0.65069" mixin="SceneGroup" visible="true">
 
-            <a-box id="ServicesButton" position="0 4.8 0.5" mixin="SceneButton" change-model-color="#FFB905"
+            <a-box id="ServicesButton" position="0 4.8 0.5" mixin="SceneButton" change-model-color="#ff6651"
             scene-button="sceneToShow:#ServicesGroup; sceneToHide:#MainButtonsGroup" 
             play-character-animation="clip: PayingAttention; loop: false">
               <a-entity id="ServicesText"  position="-2.77724 -0.40455 0.99193" 
@@ -146,7 +146,7 @@
               </a-entity>
             </a-box>
 
-            <a-box id="ContactButton" position="0 4 0.476" mixin="SceneButton" change-model-color="#FF6651"
+            <a-box id="ContactButton" position="0 4 0.476" mixin="SceneButton" change-model-color="#7765F3"
             scene-button="sceneToShow: #SSNNButtonsGroup; sceneToHide: #MainButtonsGroup"
             play-character-animation="clip: Talking">
               <a-entity id="ContactText"  position="-2.55047 -0.40455 0.99193" 
@@ -155,7 +155,7 @@
               </a-entity>
             </a-box>
 
-            <a-box id="AboutMeButton" position="0 3.2 0.5"  mixin="SceneButton" change-model-color="#309b9b"
+            <a-box id="AboutMeButton" position="0 3.2 0.5"  mixin="SceneButton" change-model-color="#3cc2c2"
             scene-button="sceneToShow: #AboutMeGroup; sceneToHide: #MainButtonsGroup"  
             play-character-animation="clip: HipHop">
               <a-entity id="AboutMeText"  position="-3.01893 -0.40455 0.99193" 
