@@ -8,7 +8,9 @@
 
     <!--AR Tracking-->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
+    <link rel="stylesheet" href="static/src/style.css">
+
     <!--External components-->
     <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
@@ -25,80 +27,24 @@
     <script src="static/src/play-character-animation-component.js"></script>
     <script src="static/src/show-on-video-time-component.js"></script>
 
-    <!-- Step 1: Include WebAR SDK script -->
-    <script src="blippar/webar-sdk-v1.1.0-beta.min.js"
-      auto-start="false"
-      logo-src="../../images/test_logo_here.png"
-      logo-width="116px"
-      logo-height="116px"
-      progress-dot-ring-scale="0.30"
-      progress-dot-ring-color="#00AAFF"
-      progress-ring-scale="0.36"
-      progress-ring-color="#00FFFF"
-      progress-ring-line-width="5"
-
-      alert-border-color="#00FFFF"
-      alert-border-width="5px"
-      alert-background-color="#283747"
-      alert-message-text-color="#00AAFF"
-      alert-button-color="#00FFFF"
-      alert-button-text-color="#283747"
-      alert-button-height="50px"
-      alert-camera-permission-text="We need to ask for access to the camera so this experience can work!!!"
-      alert-camera-permission-button-text="No Problem"
-      alert-motion-permission-text="Now we need access to motion sensors!!!"
-      alert-motion-permission-button-text="No Problem"
-
-      ui-background-color="#283747"
-      ui-text-color="#00FFFF"
-      desktop-logo-src="../../images/test_desktop_logo.png"
-      desktop-logo-width="108px"
-      desktop-logo-height="30px"
-      issue-img-src="../../images/test_issue_img.png"
-      issue-img-width="116px"
-      issue-img-height="116px"
-      show-guide-view="true"
-    ></script>
-
   </head>
 
   <body>
-    <!-- Refer API:Functions documentation for more details -->
-    <script src="static/src/BlipparManager.js"></script>
+    <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+      loading-screen="backgroundColor:#ffb905">
 
-    <!-- Step 2: Add webar-scene attribute to AFrame's <a-scene> tag -->
-      <!-- Provide a valid Blippar license-key value in the key: property  -->
-    <a-scene
-      webar-scene="key: 755119c9-cefe-4bbf-aabc-aaba745be54e"
-      vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false"
-      loading-screen="enabled: false"
-      renderer="colorManagement: true;"
-      animation-timeline__1="timeline: #landingTimeline; loop: false; startEvents: landit;">
-
-      <!-- Step 3: Add webar-camera attribute to AFrame's <a-entity camera> tag -->
-      <a-camera webar-camera cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 20000; objects: .clickable"></a-camera>
+      <!-- Ask user for camera permissions, display some text if permission is denied -->
+      <a-entity zappar-permissions-ui id="permissions"></a-entity>
+      <!-- shows a full-page dialog that informs the user they're using an unsupported browser -->
+      <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
 
       <a-assets>
-        <a-timeline id="landingTimeline">
-          <a-timeline-animation select="#landing" name="cursorbegin"></a-timeline-animation>
-          <a-timeline-animation select="#landing" name="cursorend"></a-timeline-animation>
-        </a-timeline>
-
-        <a-mixin id="landeffect"
-          animation__cursorbegin="property: visible; from: false; to: true; dur: 1; autoplay: false"
-          animation__cursorend="property: scale; to: 0.75 0.75 0.75; dur: 2000; easing: easeInOutElastic; autoplay: false"
-          scale="0.0001 0.0001 0.0001"
-          position="0 0 0"
-          visible="false">
-        </a-mixin>
-
         <!--Images-->
         <img id="playTexture" src="static/media/playTexture.png" crossorigin="anonymous">
         <img id="roundedSquareBG" src="static/media/9 slice square.png" crossorigin="anonymous">
         
         <!--Videos-->
-        <video id="reel" src="static/media/PortfolioReelLowRes.mp4" loop="false" crossorigin="anonymous"></video>
+        <video id="reel" src="https://test-aure.s3.eu-west-3.amazonaws.com/PortfolioReelLowRes.mp4" loop="false" crossorigin="anonymous"></video>
 
         <!--Fonts-->
         <a-asset-item id="PaytoneFont" src="static/fonts/Paytone One_Regular.json"></a-asset-item>
@@ -133,14 +79,14 @@
         animation__hide="property:scale; to:0 0 0; dur: 150; startEvents: hide; autoplay:false; easing:easeOutQuad">
         </a-mixin>
 
-        <a-mixin id="SceneButton" scale="0.25 0.25 0.25" rotation="-20 0 0" gltf-model="#Button3DBackground" webar-loadmonitor="elType: glb"
+        <a-mixin id="SceneButton" scale="0.25 0.25 0.25" rotation="-20 0 0" gltf-model="#Button3DBackground"
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
         animation__pop="property: scale; from: 0.25 0.25 0.25; to: 0.3 0.3 0.3; dir:alternate; dur: 750; easing: easeOutQuad; pauseEvents:push; resumeEvents:push; startEvents: pop; loop:1"
         repeat-animation-interval="animationName: pop; interval:3000"
         ></a-mixin>
 
         <a-mixin id="HomeButton" position="0 0.36 1" scale="0.15 0.2 0.2" rotation="-20 0 0"
-        change-model-color= "#2a10aa" gltf-model="#Button3DBackground"  webar-loadmonitor="elType: glb"
+        change-model-color= "#2a10aa" gltf-model="#Button3DBackground"
         animation__push="property: scale; to: 0.15 0.15 0.15; dir:alternate; dur: 125; easing: easeOutQuad; startEvents: push; loop:1"
         play-character-animation="clip:Waving"
         ></a-mixin>
@@ -150,7 +96,7 @@
         material="color:#cecece">
         </a-mixin>
 
-        <a-mixin id="SocialNetworksButton" scale="7.43008 7.43008 7.43008" rotation="-20 0 0" webar-loadmonitor="elType: glb"
+        <a-mixin id="SocialNetworksButton" scale="7.43008 7.43008 7.43008" rotation="-20 0 0"
         animation__punch="property: scale; to: 9 9 9; dir:alternate; dur: 750; easing: easeOutQuad; startEvents: punch; loop:1"
         repeat-animation-interval="animationName: punch; interval:3000"
         ></a-mixin>
@@ -163,7 +109,7 @@
           animation__hide="property: scale; to: 0 0 0; dur: 125; easing: easeOutQuad; startEvents: hideSv">
         </a-mixin>
 
-        <a-mixin id="ServiceModel" position="0 0.52756 0" scale="0.05 0.05 0.05"  animation="property:rotation; to: 0 360 0; dur: 16000; easing: linear; loop: true" animation-mixer webar-loadmonitor="elType: glb"></a-mixin> 
+        <a-mixin id="ServiceModel" position="0 0.52756 0" scale="0.05 0.05 0.05"  animation="property:rotation; to: 0 360 0; dur: 16000; easing: linear; loop: true" animation-mixer></a-mixin> 
         <a-mixin id="ServiceText" scale="0.43881 0.43881 0.43881" rotation="-20 0 0" text-geometry="height: 0.25; size: 0.85; font:#Exo2Font" material="color:#cecece"></a-mixin>
       </a-assets>
 
@@ -172,22 +118,21 @@
         <a-entity id="directionaltarget" position="2.75 2 -4.5"></a-entity>
       </a-entity>
 
-      <!-- Step 4: Add webar-stage attribute to an AFrame's parent <a-entity> tag -->
-      <a-entity webar-stage>
-        <a-ring landingcursor id="landing" mixin="landeffect" color="#FBB42C" material="opacity: 0.4; transparent: true" 
-        radius-inner="0.8" radius-outer="1"  rotation="-90 0 0" segments-phi="30" segments-theta="96"></a-ring>
+      <a-camera zappar-camera cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 20000; objects: .clickable"></a-camera>
 
-        <!-- Step 5: Add AR models under the webar-stage node -->
-          <!-- Add webar-loadmonitor attribute to the entities to display loading progress screen before starting the surface tracking -->
-          <!-- Refer API:Attributes documentation for more details -->
+      <a-entity zappar-instant="placement-mode: true" id="instant-tracker">
+
+        <a-ring id="landing" color="#FBB42C" material="opacity: 0.4; transparent: true" 
+        radius-inner="0.8" radius-outer="1"  rotation="-90 0 0" segments-phi="30" segments-theta="96"
+        animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hide; autoplay:false; easing:easeOutQuad"></a-ring>
 
         <!--Augmented content-->
         <a-entity id="SceneWrapper" scale="0 0 0" rotation="0 0 0"
-        animation__show="property: scale; from: 0 0 0; to: 0.4 0.4 0.4; dur: 200; startEvents: showElements; autoplay:false; easing:easeOutQuad" 
+        animation__show="property: scale; from: 0 0 0; to: 0.6 0.6 0.6; dur: 200; startEvents: showElements; autoplay:false; easing:easeOutQuad" 
         animation__hide="property:scale; to:0 0 0; dur: 200; startEvents: hideElements; autoplay:false; easing:easeOutQuad"
         >
           <!--3D Avatar-->
-          <a-entity id="MiniYo" position="0.01 0 0" scale="0.012 0.012 0.012" gltf-model="#MiniYo3DModel" webar-loadmonitor="elType: glb"
+          <a-entity id="MiniYo" position="0.01 0 0" scale="0.012 0.012 0.012" gltf-model="#MiniYo3DModel"
             animation-mixer="clip:Waving; crossFadeDuration: 0.5"
           ></a-entity>
 
@@ -231,7 +176,7 @@
               <a-entity id="ARServiceText" mixin="ServiceText"  position="-0.38375 0.00219 0.79166" text-geometry="value: AR"></a-entity>
             </a-entity>
 
-            <a-entity id="VRService"mixin="ServiceEntity"
+            <a-entity id="VRService" mixin="ServiceEntity"
             show-on-video-time="showTime:23.0; hideTime: 40.0">
               <a-entity id="VRModel"  mixin="ServiceModel" gltf-model="#VRServiceModel"></a-entity>
               <a-entity id="VRServiceText" mixin="ServiceText"  position="-0.32426 0.00219 0.79166" text-geometry="value: VR"></a-entity>
@@ -249,7 +194,7 @@
               <a-entity id="3DPrintText" mixin="ServiceText"  position="-1.23289 0.00219 0.79166" text-geometry="value: 3D PRINT"></a-entity>
             </a-entity>
 
-            <a-video id="ReelVideo" rotation="0 0 0" src="#reel" video-controller look-at="[camera]" webar-loadmonitor="elType: video"
+            <a-video id="ReelVideo" rotation="0 0 0" src="#reel" video-controller look-at="[camera]"
             width="1.6" height="0.9" scale="2 2 2" position="0 4.5 -0.1982">
               <a-plane src="#playTexture" scale="0.5 0.5 0.5" position="0 0 0.03" shader="flat" material="alphaTest: 0.5"></a-plane>
             </a-video>
@@ -287,9 +232,9 @@
 
           <a-entity id="HobbyModels" position="0 0.8924 0"
           animation="property:rotation; to: 0 360 0; dur: 5000; easing: linear; loop: true">
-            <a-cylinder id="HobbyModel1" scale="6 6 6" position="0.96919 1.91491 0.0901" gltf-model="#lowPolyLightbulbModel" webar-loadmonitor="elType: glb"></a-cylinder>
-            <a-cylinder id="HobbyModel2" rotation="0 50.32746680870125 0" scale="6 6 6" position="-0.60055 1.91491 0.60805" gltf-model="#lowPolyPlaneModel" webar-loadmonitor="elType: glb" animation-mixer="clip:Fly"></a-cylinder>
-            <a-cylinder id="HobbyModel3" rotation="0 -164.65431933351545 0" scale="6 6 6" position="-0.28741 1.91491 -0.83571" gltf-model="#lowPolyControllerModel" webar-loadmonitor="elType: glb"></a-cylinder>
+            <a-cylinder id="HobbyModel1" scale="6 6 6" position="0.96919 1.91491 0.0901" gltf-model="#lowPolyLightbulbModel"></a-cylinder>
+            <a-cylinder id="HobbyModel2" rotation="0 50.32746680870125 0" scale="6 6 6" position="-0.60055 1.91491 0.60805" gltf-model="#lowPolyPlaneModel" animation-mixer="clip:Fly"></a-cylinder>
+            <a-cylinder id="HobbyModel3" rotation="0 -164.65431933351545 0" scale="6 6 6" position="-0.28741 1.91491 -0.83571" gltf-model="#lowPolyControllerModel"></a-cylinder>
           </a-entity>
 
           <a-entity id="DescriptionBackground" position="0 4 0" rotation="-20 0 0" scale="0.9 0.9 0.9"
@@ -311,10 +256,14 @@
             <a-entity mixin="HomeText"></a-entity>
           </a-box>
         </a-entity>
-
         </a-entity>
       </a-entity>
 
     </a-scene>
+
+     <!-- Some UI for the user to tap to indicate they're happy with the placement -->
+     <div id="zappar-placement-ui" visible="false">Tap here to place the object</div>
+
+     <script src="static/src/ZapparManager.js"></script>
   </body>
 </html>
